@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import LeftSideBar from "@/Components/layout/LeftSideBar";
 import TopBar from "@/Components/layout/TopBar";
+import { ToasterProvidor } from "@/lib/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-         <div className="flex max-lg:flex-col text-grey-1">
+          <ToasterProvidor/>         <div className="flex max-lg:flex-col text-grey-1">
           <LeftSideBar/>
           <TopBar/>
           
