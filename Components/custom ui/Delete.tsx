@@ -14,22 +14,26 @@ import {
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
 import toast from "react-hot-toast";
+import { strict } from "assert";
+import { string } from "zod";
 
 interface DeleteProps {
   id: string;
+  item:string
 }
 
-const Delete: React.FC<DeleteProps> = ({ id }) => {
+const Delete: React.FC<DeleteProps> = ({item, id }) => {
   const [loading, setLoading] = useState(false);
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/collections/${id}`, { method: "DELETE" });
+      const itemType = item === "product" ? "products" : "collections"
+      const res = await fetch(`/api/${itemType}/${id}`, { method: "DELETE" });
       if(res.ok){
         setLoading(false)
-        window.location.href= ("/collections")
-        toast.success('Collection deleted')
+        window.location.href= (`${itemType}`)
+        toast.success(`${item} Delete`)
       }
     } catch (error) {
       console.log(error);
@@ -50,8 +54,7 @@ const Delete: React.FC<DeleteProps> = ({ id }) => {
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            Collection.
+            This action cannot be undone. This will permanently delete your  {item}.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
